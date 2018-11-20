@@ -1,0 +1,24 @@
+.containerdrag {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
+.wip, .droppable, .spacer {
+    flex-grow: 1;
+    flex-wrap: nowrap
+}
+
+.wip {
+    background: #33FFD7;
+}
+
+.droppable {
+    background: #FF33D1;
+}
+
+
+.spacer {
+    background: #FF6133;
+}
+
