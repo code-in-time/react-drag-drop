@@ -6,7 +6,9 @@
 
 .wip, .droppable, .spacer {
     flex-grow: 1;
-    flex-wrap: nowrap
+    flex-wrap: nowrap;
+    display: inline-flex;
+    flex-direction: column;
 }
 
 .wip {
@@ -17,8 +19,11 @@
     background: #FF33D1;
 }
 
-
 .spacer {
     background: #FF6133;
 }
 
+.wip div, .droppable div, .droppable.spacer {
+    flex-grow: 1;
+    max-height: 60px;
+}

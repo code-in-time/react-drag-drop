@@ -74,7 +74,7 @@ class AppDragDrop extends Component {
                 {/* <h2 className="header">DRAG & DROP DEMO</h2> */}
                 <div
                     className={css.wip}
-                    // onDragOver={(e) => this.onDragOver(e)}
+                    onDragOver={(e) => this.onDragOver(e)}
                     onDrop={(e) => {
                     this.onDrop(e, "wip")
                 }}>
