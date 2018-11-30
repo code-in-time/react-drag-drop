@@ -21,23 +21,21 @@ class AppDragDrop extends Component {
         ]
     }
 
-    onDragStart = (ev, id) => {
+    onDragStart1 = (ev, id) => {
         console.log('dragstart:',id);
         ev.dataTransfer.setData("id", id);
     }
 
-    onDragOver = (ev) => {
-        ev.preventDefault();
-    }
-
-    onDrop = (ev, cat) => {       
+    onDrop1 = (ev, cat) => {
+        // debugger;    
         let id = ev.dataTransfer.getData("id");
         let tasks = this.state.tasks.filter((task) => {
-            if (task.name == id) {
+            if (task.name === id) {
                      task.category = cat;           
             }              
              return task;       
          });        
+        //  debugger
          this.setState({           
             ...this.state,           
             tasks       
@@ -49,6 +47,7 @@ class AppDragDrop extends Component {
             wip: [],
             complete: []
         }
+        // debugger; 
         this
             .state
             .tasks
@@ -56,7 +55,7 @@ class AppDragDrop extends Component {
                 tasks[t.category].push(
                     <div
                         key={t.name}
-                        onDragStart={(e) => this.onDragStart(e, t.name)}
+                        onDragStart={(e) => this.onDragStart1(e, t.name)}
                         draggable
                         className="draggable"
                         style={{
@@ -72,25 +71,30 @@ class AppDragDrop extends Component {
         return (
             <div className={`${css.containerdrag} container-drag`}>
                 {/* <h2 className="header">DRAG & DROP DEMO</h2> */}
+
                 <div
                     className={css.wip}
-                    onDragOver={(e) => this.onDragOver(e)}
-                    onDrop={(e) => {
-                    this.onDrop(e, "wip")
+                    onDragOver={(e) => e.preventDefault()}
+                        onDrop={(e) => {
+                            this.onDrop1(e, "wip")
                 }}>
                     <span className="task-header">WIP</span>
                     {tasks.wip}
                 </div>
-                <div className={css.spacer}>
+
+                <div
+                    className={css.spacer}>
                     spacer
                 </div>
+
                 <div
                     className={`${css.droppable} droppable`}
-                    onDragOver={(e) => this.onDragOver(e)}
-                    onDrop={(e) => this.onDrop(e, "complete")}>
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => this.onDrop1(e, "complete")}>
                     <span className="task-header">COMPLETED</span>
                     {tasks.complete}
                 </div>
+
             </div>
         )
     }
