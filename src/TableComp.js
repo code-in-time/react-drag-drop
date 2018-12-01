@@ -40,6 +40,8 @@ export default class TableComp extends Component {
 
   render() {
 
+    let self = this;
+
     return (
       <div>
         <button onClick={() => this.setState({ expanded: {2: true, 4: true, 6: true} })}>open 246</button>
@@ -52,7 +54,8 @@ export default class TableComp extends Component {
           data={this.state.otherData}
           SubComponent={
             row => {
-              return (<div>test</div>)
+              console.log('row', row);
+              return (<div>test <button onClick={() => this.setState({ expanded: {} })}>close all></button></div>)
             }
           }
           expanded={this.state.expanded}
@@ -83,6 +86,28 @@ export default class TableComp extends Component {
             {
               Header: "open",
               accessor: "open"
+            },
+            {
+              Header: ">>>>>",
+              accessor: "id",
+              Cell: row => {
+                const i = row.index;
+                let obj = {};
+                obj[i] = true;
+                return  <button
+                          onClick={
+                            (d) => {
+                              console.log('row', [row, this]);
+                              debugger;
+                              self.setState(
+                                {
+                                  expanded: obj
+                                }
+                              );
+                            }
+                          }
+                        >{row.value}</button>
+              }
             },
             {
               Header: () => <strong>More</strong>,
