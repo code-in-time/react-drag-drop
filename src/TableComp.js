@@ -91,7 +91,7 @@ export default class TableComp extends Component {
               Header: ">>>>>",
               accessor: "id",
               Cell: row => {
-                const i = row.index;
+                const i = row.viewIndex;
                 let obj = {};
                 obj[i] = true;
                 return  <button
