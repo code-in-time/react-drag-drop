@@ -3,6 +3,7 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { makeData, Logo, Tips } from "../src/utils";
 import axios from 'axios';
+import { cloneDeep } from 'lodash';
 
 export default class TableComp extends Component {
 
@@ -27,11 +28,6 @@ export default class TableComp extends Component {
           v.open = false;
           return v;
         });
-
-
-
-
-
 
         this.setState({ otherData: res.data });
         this.setState({ loading: false });
@@ -71,6 +67,41 @@ export default class TableComp extends Component {
               id: "completed",
               accessor: d => `${d.completed} ${d.id}`
             },
+            {
+              Header: "checked",
+              accessor: "",
+              id: 'checkbox',
+              // accessor: d => `${d.completed} ${d.id}`
+              Cell: (row, s) => {
+                return (
+                  <input
+                    type="checkbox"
+                    value="x"
+                    onChange={(e) => {
+                      const s = self;
+
+                      // toggle the check box open
+                      self.state.otherData.map((item, i) => {
+                        if (row.value.id === item.id) {
+                          debugger
+                          let c = cloneDeep(self.state.otherData);
+                          c[i].loading = !c[i].loading;
+                          self.setState({
+                            otherData: c,
+                          })
+                            let s = 1;
+                        }
+                      });
+
+
+                      
+
+
+                      console.log('test')
+                    } }
+                    checked={!row.value.open}/>)
+                }
+            },            
             {
               Header: "id",
               accessor: "id",
@@ -119,18 +150,18 @@ export default class TableComp extends Component {
           className="-striped -highlight"
           loadingText= 'Loading...'
           loading={this.state.loading}
-          getTrProps={(state, rowInfo, column) => {
-            if (rowInfo){
-              debugger
-              return {
-                style: {
-                  background: rowInfo.row.id === 1 ? "red" : "blue"
-                }
-              };
-          } else {
-            return {}
-          }
-          }}
+          // getTrProps={(state, rowInfo, column) => {
+          //   if (rowInfo){
+          //     debugger
+          //     return {
+          //       style: {
+          //         background: rowInfo.row.id === 1 ? "red" : "blue"
+          //       }
+          //     };
+          // } else {
+          //   return {}
+          // }
+          // }}
           getTdProps={(state, rowInfo, column, instance) => {
             return {
               onClick: (e, handleOriginal) => {
