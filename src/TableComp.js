@@ -73,21 +73,25 @@ export default class TableComp extends Component {
               id: 'checkbox',
               // accessor: d => `${d.completed} ${d.id}`
               Cell: (row, s) => {
+                debugger
                 return (
                   <input
                     type="checkbox"
                     value="x"
                     onChange={(e) => {
                       const s = self;
+                      let cd = cloneDeep(self.state.otherData);
 
                       // toggle the check box open
-                      self.state.otherData.map((item, i) => {
+                      cd.map((item, i) => {
                         if (row.value.id === item.id) {
                           debugger
-                          let c = cloneDeep(self.state.otherData);
-                          c[i].loading = !c[i].loading;
+                          cd[i].open = !cd[i].open;
+                          let ex = {};
+                          ex[i] = cd[i].open
                           self.setState({
-                            otherData: c,
+                            otherData: cd,
+                            expanded: {...self.state.expanded, ...ex}
                           })
                             let s = 1;
                         }
@@ -99,7 +103,7 @@ export default class TableComp extends Component {
 
                       console.log('test')
                     } }
-                    checked={!row.value.open}/>)
+                    checked={row.value.open}/>)
                 }
             },            
             {
@@ -182,6 +186,12 @@ export default class TableComp extends Component {
                 rowInfo.show = false;
               }
             };
+          }}
+          onPageChange={(pageIndex) => {
+              self.setState({ expanded: {} })
+              console.log('lllllllllllllllllllllllllllllll' , pageIndex);
+              // TODO on page change make sure that each ind is open tru
+              console.log('state expanded', this.state.expanded)
           }}
         />  
       </div>
