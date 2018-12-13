@@ -8,14 +8,47 @@ import { cloneDeep } from 'lodash';
 export default class TableComp extends Component {
 
     constructor() {
-        super();
-        this.state = {
-          // data: makeData(),
-          otherData: [],
-          loading: false,
-          expanded: {}
-        };
-      }
+      super();
+      this.emptyAndAddToTable = this.emptyAndAddToTable.bind(this);
+      this.addoneTotablerow = this.addoneTotablerow.bind(this);
+      this.state = {
+        // data: makeData(),
+        otherData: [],
+        loading: false,
+        expanded: {}
+      };
+    }
+
+    // static getDerivedStateFromError(error) {
+    //   // Update state so the next render will show the fallback UI.
+    //   return { hasError: true };
+    // }
+  
+    // componentDidCatch(error, info) {
+    //   // You can also log the error to an error reporting service
+    //   console.log(error, info);
+    // }
+
+    emptyAndAddToTable() {
+      let x = cloneDeep(this.state.otherData);
+      console.log('xx', x);
+
+      x = {};
+
+      this.setState({
+        otherData: []
+      });
+    }
+
+    addoneTotablerow() {
+      let x = cloneDeep(this.state.otherData);
+
+      const otherData = [...x, {userId: 1, id: 1, title: "delectus aut autem", completed: false, open: false}];
+      debugger
+      this.setState({
+        otherData
+      });
+    }
 
   componentDidMount() {
     this.setState({ loading: true });
@@ -42,10 +75,10 @@ export default class TableComp extends Component {
       <div>
         <button onClick={() => this.setState({ expanded: {2: true, 4: true, 6: true} })}>open 246</button>
         <button onClick={() => this.setState({ expanded: {} })}>
-
-
           colse all
         </button>
+        <button onClick={this.emptyAndAddToTable}>Empty</button>
+        <button onClick={this.addoneTotablerow}>Add to Table</button>
         <ReactTable
           data={this.state.otherData}
           SubComponent={
@@ -73,7 +106,7 @@ export default class TableComp extends Component {
               id: 'checkbox',
               // accessor: d => `${d.completed} ${d.id}`
               Cell: (row, s) => {
-                debugger
+                // debugger
                 return (
                   <input
                     type="checkbox"
@@ -193,6 +226,7 @@ export default class TableComp extends Component {
               // TODO on page change make sure that each ind is open tru
               console.log('state expanded', this.state.expanded)
           }}
+          minRows={3}
         />  
       </div>
     )
