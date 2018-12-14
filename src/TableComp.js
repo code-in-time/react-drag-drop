@@ -1,16 +1,19 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from "react-redux";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { makeData, Logo, Tips } from "../src/utils";
 import axios from 'axios';
 import { cloneDeep } from 'lodash';
+import { actionAddTodo } from '../src/redux/reducerTodo';
 
-export default class TableComp extends Component {
+class TableComp extends Component {
 
     constructor() {
       super();
       this.emptyAndAddToTable = this.emptyAndAddToTable.bind(this);
       this.addoneTotablerow = this.addoneTotablerow.bind(this);
+      this.btnClick = this.btnClick.bind(this);
       this.state = {
         // data: makeData(),
         otherData: [],
@@ -28,6 +31,11 @@ export default class TableComp extends Component {
     //   // You can also log the error to an error reporting service
     //   console.log(error, info);
     // }
+
+    btnClick() {
+      debugger
+      this.props.actionAddTodo('lllllllll');
+    }
 
     emptyAndAddToTable() {
       let x = cloneDeep(this.state.otherData);
@@ -79,6 +87,7 @@ export default class TableComp extends Component {
         </button>
         <button onClick={this.emptyAndAddToTable}>Empty</button>
         <button onClick={this.addoneTotablerow}>Add to Table</button>
+        <button onClick={this.btnClick}>Add todo</button>
         <ReactTable
           data={this.state.otherData}
           SubComponent={
@@ -232,3 +241,18 @@ export default class TableComp extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    addMessage: state.todos
+  };
+};
+
+const mapDispatchToProps = { 
+  actionAddTodo: actionAddTodo
+ };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TableComp);
