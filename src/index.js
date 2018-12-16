@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './redux/index';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const store = createStore(
     rootReducer,
